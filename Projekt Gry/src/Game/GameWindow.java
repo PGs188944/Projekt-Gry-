@@ -1,17 +1,17 @@
 package Game;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import javax.swing.JFrame;
 
 public class GameWindow extends JFrame {
-    public JFrame jframe;
+    public JFrame jframe = new JFrame();
 
     public GameWindow(GamePanel gamePanel) {
-        jframe = new JFrame();
-        jframe.setSize(400, 400);
-        jframe.setLocationRelativeTo(null);
-        jframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        jframe.add(gamePanel);
-        jframe.setVisible(true);
+        //this.jframe.setLocationRelativeTo((Component)null);
+        this.jframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.jframe.add(gamePanel);
+        this.jframe.setResizable(false);
+        this.jframe.pack(); //ustawia rozmiar gamewindow aby pasował do rozmiarów konponentów (gamepanel)
+        this.jframe.setVisible(true);
     }
 }
