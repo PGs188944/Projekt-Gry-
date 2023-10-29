@@ -10,7 +10,9 @@ import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel {
     private MouseInputs mouseInputs;
-    int xDelta=100, yDelta=100;
+    int xDelta = 100, yDelta = 100;
+    private int frames = 0;
+    private long lastCheck = 0;
 
     public GamePanel() {
 
@@ -20,22 +22,23 @@ public class GamePanel extends JPanel {
         addMouseMotionListener(mouseInputs);
 
     }
-    public void changeXDelta(int value){
-        this.xDelta+=value;
-        repaint();
-    }
-    public void changeYDelta(int value){
-        this.yDelta+=value;
-        repaint();
-    }
-    public void setRectPOs(int x, int y){
-        this.xDelta=x;
-        this.yDelta=y;
-        repaint();
-    }
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
 
-        g.fillRect(xDelta,yDelta,200,50);
+    public void changeXDelta(int value) {
+        this.xDelta += value;
+    }
+
+    public void changeYDelta(int value) {
+        this.yDelta += value;
+    }
+
+    public void setRectPOs(int x, int y) {
+        this.xDelta = x;
+        this.yDelta = y;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.fillRect(xDelta, yDelta, 200, 50);
+
     }
 }

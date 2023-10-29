@@ -7,9 +7,11 @@ import java.awt.event.KeyListener;
 
 public class KeyboardInputs implements KeyListener {
     private GamePanel gamePanel;
-    public KeyboardInputs(GamePanel gamePanel){
-    this.gamePanel=gamePanel;
+
+    public KeyboardInputs(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -17,7 +19,7 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 gamePanel.changeYDelta(-5);
                 break;
