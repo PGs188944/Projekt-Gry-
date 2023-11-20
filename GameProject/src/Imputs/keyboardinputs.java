@@ -12,6 +12,7 @@ public class keyboardinputs {
     final GamePanel gamePanel;
     Action upAction, downAction,leftAction,rightAction;
     Action standUp,standDown,standLeft,standRight;
+    Action attacking;
     public keyboardinputs(GamePanel gamePanel){
         this.gamePanel=gamePanel;
         upAction = new UpAction();
@@ -22,6 +23,7 @@ public class keyboardinputs {
         standDown = new StandDown();
         standLeft = new StandLeft();
         standRight = new StandRight();
+        attacking = new Attacking();
 
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke('w'),"upAction");
         gamePanel.getActionMap().put("upAction",upAction);
@@ -40,38 +42,41 @@ public class keyboardinputs {
         gamePanel.getActionMap().put("standLeft",standLeft);
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_D,0,true),"standRight");
         gamePanel.getActionMap().put("standRight",standRight);
+
+        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),"attack");
+        gamePanel.getActionMap().put("attack",attacking);
     }
     // walking
     public class UpAction extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setDirection(UP);
-                System.out.println("W");
+            gamePanel.getGame().getPlayer().setUp(true);
+               //System.out.println("W");
         }
     }
     public class DownAction extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setDirection(DOWN);
-                System.out.println("S");
+            gamePanel.getGame().getPlayer().setDown(true);
+                //System.out.println("S");
         }
     }
     public class LeftAction extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setDirection(LEFT);
-                System.out.println("A");
+            gamePanel.getGame().getPlayer().setLeft(true);
+                //System.out.println("A");
         }
     }
     public class RightAction extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setDirection(RIGHT);
-                System.out.println("D");
+            gamePanel.getGame().getPlayer().setRight(true);
+                //System.out.println("D");
         }
 
     }
@@ -80,28 +85,37 @@ public class keyboardinputs {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setMoving(false);
+            gamePanel.getGame().getPlayer().setUp(false);
         }
     }
     public class StandDown extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setMoving(false);
+            gamePanel.getGame().getPlayer().setDown(false);
         }
     }
     public class StandLeft extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setMoving(false);
+            gamePanel.getGame().getPlayer().setLeft(false);
         }
     }
     public class StandRight extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.setMoving(false);
+            gamePanel.getGame().getPlayer().setRight(false);
+        }
+    }
+
+    private class Attacking extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gamePanel.getGame().getPlayer().setAttacking(true);
+            System.out.println("Spacja");
         }
     }
 }

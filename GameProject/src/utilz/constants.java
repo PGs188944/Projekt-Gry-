@@ -15,8 +15,10 @@ public class constants {
         public static final int stand_D = 18;
         public static final int stand_L = 17;
         public static final int stand_U = 16;
-        public static final int jump_R = 15;
-        public static final int jump_L = 13;
+        public static final int attack_U = 12;
+        public static final int attack_L = 13;
+        public static final int attack_D = 14;
+        public static final int attack_R = 15;
         public static final int walking_R = 11;
         public static final int walking_D = 10;
         public static final int walking_L = 9;
@@ -29,8 +31,10 @@ public class constants {
                 case walking_R:
                 case walking_U:
                     return 11;
-                case jump_L:
-                case jump_R:
+                case attack_U:
+                case attack_L:
+                case attack_R:
+                case attack_D:
                     return 12;
                 case stand_L:
                 case stand_R:
