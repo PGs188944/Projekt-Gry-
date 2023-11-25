@@ -1,13 +1,10 @@
 package entities;
 
-import javax.imageio.ImageIO;
+import utilz.LoadSave;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-import static utilz.constants.Directions.*;
-import static utilz.constants.Directions.RIGHT;
 import static utilz.constants.PlayerConstants.*;
 
 public class Player extends Entity {
@@ -18,9 +15,11 @@ public class Player extends Entity {
     private boolean moving = false, attacking = false;
     private boolean up, down, left, right;
     private float playerSpeed = 2.0f;
+    private int playerSize;
 
-    public Player(float x, float y) {
+    public Player(float x, float y, int playerSize) {
         super(x, y);
+        this.playerSize=playerSize;
         loadAnimations();
     }
 
@@ -32,7 +31,7 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 128, 128, null);
+        g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, playerSize, playerSize, null);
     }
 
 
@@ -138,28 +137,13 @@ public class Player extends Entity {
 
     private void loadAnimations() {
 
-        InputStream input = getClass().getResourceAsStream("/viking.png"); // "/" mowi ze obraz jest w jednym z folderow
-
-        try {
-            BufferedImage img = ImageIO.read(input);
+            BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
             animations = new BufferedImage[21][13];
             for (int j = 0; j < animations.length; j++) {
                 for (int i = 0; i < animations[j].length; i++) {
                     animations[j][i] = img.getSubimage(i * 64, j * 64, 64, 64);
                 }
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                input.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
     }
 
     public void resetDirBooleans() {
