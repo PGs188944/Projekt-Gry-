@@ -12,7 +12,7 @@ public class keyboardinputs {
     final GamePanel gamePanel;
     Action upAction, downAction,leftAction,rightAction;
     Action standUp,standDown,standLeft,standRight;
-    Action attacking;
+    Action jump, fall;
     public keyboardinputs(GamePanel gamePanel){
         this.gamePanel=gamePanel;
         upAction = new UpAction();
@@ -23,7 +23,8 @@ public class keyboardinputs {
         standDown = new StandDown();
         standLeft = new StandLeft();
         standRight = new StandRight();
-        attacking = new Attacking();
+        jump = new Jumping();
+        fall = new Falling();
 
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke('w'),"upAction");
         gamePanel.getActionMap().put("upAction",upAction);
@@ -43,8 +44,10 @@ public class keyboardinputs {
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_D,0,true),"standRight");
         gamePanel.getActionMap().put("standRight",standRight);
 
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),"attack");
-        gamePanel.getActionMap().put("attack",attacking);
+        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),"jump");
+        gamePanel.getActionMap().put("jump",jump);
+        gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE,0,true),"fall");
+        gamePanel.getActionMap().put("fall",fall);
     }
     // walking
     public class UpAction extends AbstractAction{
@@ -80,6 +83,15 @@ public class keyboardinputs {
         }
 
     }
+    private class Jumping extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gamePanel.getGame().getPlayer().setJump(true);
+            System.out.println("Spacja");
+        }
+    }
+
     // standing
     public class StandUp extends AbstractAction{
 
@@ -109,13 +121,12 @@ public class keyboardinputs {
             gamePanel.getGame().getPlayer().setRight(false);
         }
     }
-
-    private class Attacking extends AbstractAction {
+    public class Falling extends AbstractAction{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setAttacking(true);
-            System.out.println("Spacja");
+            gamePanel.getGame().getPlayer().setJump(false);
         }
     }
+
 }

@@ -11,10 +11,10 @@ public class constants {
     }
 
     public static class PlayerConstants {
-        public static final int stand_R = 19;
-        public static final int stand_D = 18;
-        public static final int stand_L = 17;
-        public static final int stand_U = 16;
+        public static final int stand_R = 3;
+        public static final int stand_D = 2;
+        public static final int stand_L = 1;
+        public static final int stand_U = 0;
         public static final int attack_U = 12;
         public static final int attack_L = 13;
         public static final int attack_D = 14;
@@ -30,12 +30,12 @@ public class constants {
                 case walking_L:
                 case walking_R:
                 case walking_U:
-                    return 11;
+                    return 10;
                 case attack_U:
                 case attack_L:
                 case attack_R:
                 case attack_D:
-                    return 12;
+                    return 6;
                 case stand_L:
                 case stand_R:
                 case stand_D:
