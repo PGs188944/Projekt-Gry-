@@ -50,7 +50,7 @@ public class HelpMethods {
             // Upadanie
             int tileYpos = currentTile * Game.TITLES_SIZE;
             int yOffset = (int) (Game.TITLES_SIZE - hitbox.height);
-            return tileYpos + yOffset + 47;
+            return tileYpos + yOffset +47;
         } else {
             // Skok
             return currentTile * Game.TITLES_SIZE;

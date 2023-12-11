@@ -1,6 +1,7 @@
 package Imputs;
 
 import Game.GamePanel;
+import gamestates.Gamestate;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,35 +11,28 @@ import static utilz.constants.Directions.*;
 
 public class keyboardinputs {
     final GamePanel gamePanel;
-    Action upAction, downAction,leftAction,rightAction;
-    Action standUp,standDown,standLeft,standRight;
+    Action leftAction,rightAction;
+    Action standLeft,standRight;
     Action jump, fall;
+    Action pause, resume;
     public keyboardinputs(GamePanel gamePanel){
         this.gamePanel=gamePanel;
-        upAction = new UpAction();
-        downAction = new DownAction();
+
         leftAction = new LeftAction();
         rightAction = new RightAction();
-        standUp = new StandUp();
-        standDown = new StandDown();
         standLeft = new StandLeft();
         standRight = new StandRight();
         jump = new Jumping();
         fall = new Falling();
+        fall = new Falling();
+        pause = new Pause();
+        resume = new Resume();
 
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke('w'),"upAction");
-        gamePanel.getActionMap().put("upAction",upAction);
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke('s'),"downAction");
-        gamePanel.getActionMap().put("downAction",downAction);
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke('a'),"leftAction");
         gamePanel.getActionMap().put("leftAction",leftAction);
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke('d'),"rightAction");
         gamePanel.getActionMap().put("rightAction",rightAction);
 
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_W,0,true),"standUp");
-        gamePanel.getActionMap().put("standUp",standUp);
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S,0,true),"standDown");
-        gamePanel.getActionMap().put("standDown",standDown);
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_A,0,true),"standLeft");
         gamePanel.getActionMap().put("standLeft",standLeft);
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_D,0,true),"standRight");
@@ -48,85 +42,149 @@ public class keyboardinputs {
         gamePanel.getActionMap().put("jump",jump);
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE,0,true),"fall");
         gamePanel.getActionMap().put("fall",fall);
+
+        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"pauze");
+        gamePanel.getActionMap().put("pauze",pause);
+
+        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("BACK_SPACE"),"resume");
+        gamePanel.getActionMap().put("resume",resume);
+
     }
     // walking
-    public class UpAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setUp(true);
-               //System.out.println("W");
-        }
-    }
-    public class DownAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setDown(true);
-                //System.out.println("S");
-        }
-    }
-    public class LeftAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setLeft(true);
-                //System.out.println("A");
-        }
-    }
-    public class RightAction extends AbstractAction{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setRight(true);
-                //System.out.println("D");
-        }
-
-    }
     private class Jumping extends AbstractAction {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setJump(true);
-            System.out.println("Spacja");
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyPressed(0);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyPressed(0);
+                    break;
+            }
         }
     }
+
+    public class LeftAction extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyPressed(1);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyPressed(1);
+                    break;
+            }
+        }
+    }
+    public class RightAction extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyPressed(2);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyPressed(2);
+                    break;
+            }
+        }
+
+    }
+
 
     // standing
-    public class StandUp extends AbstractAction{
-
+    public class Falling extends AbstractAction{
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setUp(false);
-        }
-    }
-    public class StandDown extends AbstractAction{
+            switch (Gamestate.state) {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setDown(false);
+
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyReleased(0);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyReleased(0);
+                    break;
+            }
         }
     }
     public class StandLeft extends AbstractAction{
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setLeft(false);
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyReleased(1);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyReleased(1);
+                    break;
+            }
         }
     }
     public class StandRight extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyReleased(2);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyReleased(2);
+                    break;
+            }
+        }
+    }
+
+    // menu
+
+    private class Resume extends AbstractAction {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setRight(false);
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyPressed(3);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyPressed(3);
+                    break;
+            }
         }
     }
-    public class Falling extends AbstractAction{
+    private class Pause extends AbstractAction {
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            gamePanel.getGame().getPlayer().setJump(false);
+            switch (Gamestate.state) {
+
+                //System.out.println("A");
+                case PLAYING:
+                    gamePanel.getGame().getPlaying().keyPressed(4);
+                    break;
+                case MENU:
+                    gamePanel.getGame().getMenu().keyPressed(4);
+                    break;
+            }
         }
     }
+
+
+
 
 }
