@@ -46,7 +46,7 @@ public class keyboardinputs {
         gamePanel.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),"pauze");
         gamePanel.getActionMap().put("pauze",pause);
 
-        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("BACK_SPACE"),"resume");
+        gamePanel.getInputMap().put(KeyStroke.getKeyStroke("ESCAPE"),"resume");
         gamePanel.getActionMap().put("resume",resume);
 
     }

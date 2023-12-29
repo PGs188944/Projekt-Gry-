@@ -3,6 +3,7 @@ package gamestates;
 import Game.Game;
 import entities.Player;
 import levels.LevelManager;
+import ui.PauseOverlay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,8 @@ import java.awt.event.MouseEvent;
 public class Playing extends State implements Statemethods{
     private Player player;
     private LevelManager levelManager;
+    private PauseOverlay pauseOverlay;
+    private boolean paused = false;
 
     public Playing(Game game) {
         super(game);
@@ -23,13 +26,18 @@ public class Playing extends State implements Statemethods{
         levelManager = new LevelManager(game);
         player = new Player(200,200, (int) (64*Game.SCALE),(int) (64*Game.SCALE));
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
+        pauseOverlay = new PauseOverlay(this);
     }
 
 
     @Override
     public void update() {
-        levelManager.update();
-        player.update();
+        if(!paused) {
+            levelManager.update();
+            player.update();
+        }else {
+            pauseOverlay.update();
+        }
     }
 
     @Override
@@ -37,6 +45,8 @@ public class Playing extends State implements Statemethods{
         levelManager.draw(g);
         player.render(g);
 
+        if(paused)
+        pauseOverlay.draw(g);
     }
 
     @Override
@@ -48,17 +58,20 @@ public class Playing extends State implements Statemethods{
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (paused)
+            pauseOverlay.mousePressed(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if (paused)
+            pauseOverlay.mouseReleased(e);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        if (paused)
+            pauseOverlay.mouseMoved(e);
     }
 
     @Override
@@ -74,7 +87,7 @@ public class Playing extends State implements Statemethods{
                player.setRight(true);
                break;
            case 3:
-               Gamestate.state = Gamestate.MENU;
+               paused = !paused;
 
        }
     }
@@ -93,6 +106,9 @@ public class Playing extends State implements Statemethods{
                 break;
 
         }
+    }
+    public void unpauseGame(){
+        paused = false;
     }
 
     public Player getPlayer(){
